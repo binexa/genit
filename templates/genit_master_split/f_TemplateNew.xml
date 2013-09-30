@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm Name="{$form_short_name}" 
+          Class="{if $has_check_process==1 || $has_approve_process==1}{$php_general_form}{else}EasyForm{/if}" 
+          FormType="New" 
+          jsClass="jbForm" 
+          Title="New {$module_name|replace:'_':' '|capitalize}" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          TemplateEngine="Smarty" 
+          xTemplateFile="detail.tpl" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>  
+{foreach from=$fields item=fld}
+        ELEMENT : {$fld.name} . {$fld.element}
+        
+        {php}
+            $field = $this->_tpl_vars['fld'];
+            if ( substr($field['name'], -4)=='logo' || $field['element']=="ImageUploader" ) {
+                $is_image = true;
+            } else {
+                $is_image = false;
+            }
+            $this->assign('is_image', $is_image)
+        {/php}
+                
+{if ( $fld.name != 'Id' || $fld.name == 'Id' && $id_identity==false ) && $fld.raw_type!='timestamp' && $fld.name != 'create_by' && $fld.name != 'create_time' && $fld.name != 'create_host' && $fld.name != 'update_by' && $fld.name != 'update_time' && $fld.name != 'update_host' && $fld.name != 'is_checked' && $fld.name != 'check_by' && $fld.name != 'check_time' && $fld.name != 'is_approved' && $fld.name != 'approve_by' && $fld.name != 'approve_time' && $fld.name != 'external_attachment' && $fld.name != 'external_picture' && $fld.name != 'external_changelog'}
+	{if $fld.element == 'InputDate'}
+		<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="{$fld.element}" 
+                 DateFormat="%Y-%m-%d" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if} 
+                 CssClass="input_text" >
+	{elseif $fld.element == 'InputDatetime'}
+		<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="{$fld.element}" 
+                 DateFormat="%Y-%m-%d %H:%M:%S" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if} 
+                 CssClass="input_text" >
+    {elseif $fld.element == 'RichText'}
+		<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="CKEditor"  
+                 Mode="adv"  
+                 Config="resize_maxWidth:640,resize_minWidth:640,resize_minHeight:300" 
+                 Width="640" 
+                 Height="300" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if} >
+    {elseif $fld.element == 'Checkbox'}
+		<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}"  
+                 Class="{$fld.element}" 
+                 SelectFrom="1" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if} >    
+    {elseif $fld.element == 'Radio'}
+		<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="{$fld.element}" 
+                 SelectFrom="{$fld.options}"  
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if} >
+    {elseif $fld.element == 'Textarea'}
+    	<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="{$fld.element}" 
+                 Width="640" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}"  
+                 AllowURLParam="N" >
+    {elseif $fld.element == 'Listbox'}        
+        <Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="Listbox"  
+                 SelectFrom="{$fld.lov}" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}"  
+                 AllowURLParam="N" >
+    {elseif $fld.name =='sort_order'}
+    	<Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="Listbox"  
+                 SelectFrom="common.lov.CommLOV(Order)" 
+                 DefaultValue="50" 
+                 FieldName="{$fld.name}" 
+                 Label="Ordering"  
+                 AllowURLParam="N" >
+    {elseif $is_image }
+        <Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
+                 ElementSet="{$fld.elementSet}" 
+                 Class="ImageUploader" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}"                  
+                 AllowURLParam="N" >    
+    {else}
+        <Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" 
+                 Class="{$fld.element}" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default !='' }DefaultValue="{$fld.default}"{/if}  
+                 AllowURLParam="N" >
+    {/if}
+
+{foreach from=$fld.event item=eventItem}
+             <EventHandler Name="{$fld.name}_{$eventItem.event}"
+                           Event="{$eventItem.event}"
+                           Function="{$eventItem.function}" />
+{/foreach}
+        </Element>
+        
+{else}
+{/if}
+{/foreach}
+    </DataPanel>
+    <ActionPanel>
+        <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
+            <EventHandler Name="save_onclick" 
+                          EventLogMsg="" 
+                          Event="onclick" 
+                          Function="InsertRecord()" 
+                          RedirectPage="{literal}{@home:url}{/literal}/{$module}/{$listview_uri}" 
+                          ShortcutKey="Ctrl+Enter" 
+                          ContextMenu="Save" />
+        </Element>
+
+        <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
+            <EventHandler Name="btn_cancel_onclick" 
+                          Event="onclick" 
+                          Function="js:history.go(-1)"  
+                          ShortcutKey="Escape" 
+                          ContextMenu="Cancel" />
+        </Element>
+        
+        <Element Name="btn_spacer0" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>        
+        
+        <Element Name="btn_list" 
+                 Class="Button" 
+                 Text="List" 
+                 CssClass="button_gray_m">
+            <EventHandler Name="btn_list_onclick" 
+                          Event="onclick" 
+                          Function="js:Openbiz.Net.loadPage('{literal}{@home:url}{/literal}/{$module}/{$listview_uri}')" 
+                          ShortcutKey="" 
+                          ContextMenu="List" />
+        </Element>        
+        
+    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

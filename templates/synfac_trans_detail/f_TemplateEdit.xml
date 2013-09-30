@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm Name="{$form_short_name}" 
+          Class="{$class_general_form}" 
+          FormType="Edit" 
+          jsClass="jbForm" 
+          Title="Edit {$module_name|replace:'_':' '|capitalize}" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          DefaultForm="Y" 
+          TemplateEngine="Smarty" 
+          xTemplateFile="detail.tpl" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/edit/data_panel.tpl'}
+    </DataPanel>
+    <ActionPanel>
+        <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
+            <EventHandler Name="save_onclick" Event="onclick" EventLogMsg=""  Function="UpdateRecord()" RedirectPage="form={$form_package}.{$detail_form}&amp;fld:Id={literal}{{/literal}@{$do_package}.{$do_name}{literal}:Field[Id].Value}{/literal}" ShortcutKey="Ctrl+Enter" ContextMenu="Save" />
+        </Element>
+        <Element Name="btn_cancel" Class="Button" Text="Cancel" CssClass="button_gray_m">
+            <EventHandler Name="btn_cancel_onclick" Event="onclick" Function="SwitchForm()"  ShortcutKey="Escape" ContextMenu="Cancel" />
+        </Element>
+    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

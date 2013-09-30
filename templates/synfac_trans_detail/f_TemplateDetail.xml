@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm Name="{$form_short_name}" 
+          Class="{$class_general_form}" 
+          FormType="" 
+          jsClass="jbForm" 
+          Title="{$module_name|replace:'_':' '|capitalize} Detail" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          TemplateEngine="Smarty" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/detail/data_panel_detail.tpl'}
+    </DataPanel>
+    <ActionPanel>       
+        <Element Name="btn_new" 
+                 Class="Button" 
+                 Text="Add" 
+                 CssClass="button_gray_add" 
+                 Access="{$acl.create}"
+                 Description="new record (Insert)">
+			<EventHandler Name="btn_new_onclick" 
+                          Event="onclick" 
+                          Function="SwitchForm({$form_package}.{$new_form})"  
+                          ShortcutKey="Insert" 
+                          ContextMenu="New" />
+        </Element>          
+        <Element Name="btn_edit" 
+                 Class="Button" 
+                 Text="Edit" 
+                 CssClass="button_gray_m" 
+                 Description="edit record (Ctrl+E)"
+                 Access="{$acl.edit}" >
+			<EventHandler Name="btn_new_onclick" 
+                 Event="onclick" 
+                 Function="EditRecord({literal}{@:Elem[fld_Id].Value}{/literal})" 
+                 RedirectPage="form={$form_package}.{$edit_form}&amp;fld:Id={literal}{@:Elem[fld_Id].Value}{/literal}" 
+                 xFunction="SwitchForm({$form_package}.{$edit_form},{literal}{@:Elem[fld_Id].Value}{/literal})"  
+                 ShortcutKey="Ctrl+E" 
+                 ContextMenu="Edit" />
+        </Element>
+        <Element Name="btn_delete" 
+                 Class="Button" 
+                 Text="Delete" 
+                 CssClass="button_gray_m" 
+                 Description="delete record (Delete)"
+                 Access="{$acl.delete}" >
+            <EventHandler Name="del_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="DeleteRecord({literal}{@:Elem[fld_Id].Value}{/literal})"  
+                          RedirectPage="form={$form_package}.{$list_form}" 
+                          ShortcutKey="Ctrl+Delete" 
+                          ContextMenu="Delete" />
+        </Element>
+        
+        <Element Name="btn_spacer1" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>
+       
+       {if $has_check_process==1 }
+        <Element Name="btn_check" 
+                 Class="Button" 
+                 Text="Check Y/N" 
+                 CssClass="button_gray_l"
+                 Access="{$acl.check}">
+            <EventHandler Name="btn_check_onclick" 
+                          Event="onclick"
+                          EventLogMsg=""
+                          Function="toggleCheckRecord({literal}{@:Elem[fld_Id].Value}{/literal})"
+                          ShortcutKey="Ctrl+L" 
+                          ContextMenu="Check Y/N" />
+        </Element>
+       {/if}
+       
+       {if $has_approve_process==1 }
+        <Element Name="btn_approve" 
+                 Class="Button" 
+                 Text="Approve Y/N" 
+                 CssClass="button_gray_l"
+                 Access="{$acl.approve}">
+            <EventHandler Name="btn_approve_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="toggleApproveRecord({literal}{@:Elem[fld_Id].Value}{/literal})" 
+                          ShortcutKey="Ctrl+C" 
+                          ContextMenu="Approve Y/N"/>
+        </Element>
+        {/if}
+        
+        <Element Name="btn_spacer2" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>
+        
+        <Element Name="btn_list" 
+                 Class="Button" 
+                 Text="List" 
+                 CssClass="button_gray_m">
+            <EventHandler Name="btn_list_onclick" 
+                          Event="onclick" 
+                          Function="SwitchForm()"  
+                          ShortcutKey="Escape" 
+                          ContextMenu="List" />
+        </Element>         
+    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

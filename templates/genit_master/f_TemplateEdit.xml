@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+<EasyForm Name="{$form_short_name}" 
+          Class="{$class_general_form}" 
+          FormType="Edit" 
+          jsClass="jbForm" 
+          Title="Edit {$module_name|replace:'_':' '|capitalize}" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          DefaultForm="Y" 
+          TemplateEngine="Smarty" 
+          xTemplateFile="detail.tpl" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/edit/data_panel.tpl'} 
+    </DataPanel>
+    <ActionPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/edit/action_panel_switch.tpl'}    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

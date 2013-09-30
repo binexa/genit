@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm 
+    Name="{$form_short_name}" 
+    Class="{$class_approval_form}" 
+    FormType="List" 
+    jsClass="jbForm" 
+    Title="Checked {$module_name|replace:'_':' '|capitalize} Data" 
+    Description="" 
+    BizDataObj="{$do_package}.{$do_name}" 
+    PageSize="10" 
+    DefaultForm="Y" 
+    OtherForm = "{$form_package}.{$need_check_list_form}"    
+    TemplateEngine="Smarty" 
+    TemplateFile="grid.tpl" 
+    EventName="{$event_name}" 
+    MessageFile="{$message_file}" Access="{$acl.access}">
+    <DataPanel>
+{assign var=col_counter value=0}            
+{foreach from=$fields item=fld}
+{if $fld.name == 'Id' || $fld.onList == true}        
+        {php}
+            $field = $this->_tpl_vars['fld'];
+            if ( substr($field['name'], -4)=='logo' ) {
+                $is_image = true;
+            } else {
+                $is_image = false;
+            }
+            $this->assign('is_image', $is_image)
+        {/php}    
+        
+{if $fld.name == 'Id'}
+        <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="{$fld.name}"/>
+        <Element Name="fld_{$fld.name}" Class="ColumnText" FieldName="{$fld.name}" Label="{$fld.label}" Sortable="Y" AllowURLParam="N" Link="javascript:">         
+         	<EventHandler Name="fld_{$fld.name}_onclick" Event="onclick" 
+                          Function="SwitchForm({$form_package}.{$check_detail_form},{literal}{@:Elem[fld_Id].Value}{/literal})"   />
+        </Element>
+{elseif $fld.element == 'Listbox'}        
+        <Element Name="fld_{$fld.name}" Class="ColumnList"  SelectFrom="{$fld.lov}" FieldName="{$fld.name}" Label="{$fld.label}"  AllowURLParam="N" />
+        
+{elseif $fld.name == 'sort_order'}
+        <Element Name="fld_{$fld.name}" Class="ColumnSorting" FieldName="{$fld.name}" Label="Ordering"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" >
+        	<EventHandler Name="fld_sortorder_up" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({literal}{@:Elem[fld_Id].Value}{/literal},fld_{$fld.name},{literal}{{/literal}@:Elem[fld_{$fld.name}].Value-5{literal}}{/literal})" />
+        	<EventHandler Name="fld_sortorder_down" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({literal}{@:Elem[fld_Id].Value}{/literal},fld_{$fld.name},{literal}{{/literal}@:Elem[fld_{$fld.name}].Value+5{literal}}{/literal})" />
+        </Element>        	
+{elseif $fld.name == 'is_checked' || $fld.name == 'is_approved' }
+        <Element Name="fld_{$fld.name}" Class="ColumnBool" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+{elseif $is_image }   
+{elseif $fld.element == 'RichText'}     
+{elseif $fld.raw_type!='timestamp' 
+    && $fld.name != 'create_by' 
+    && $fld.name != 'create_time' 
+    && $fld.name != 'create_host' 
+    && $fld.name != 'update_by' 
+    && $fld.name != 'update_time' 
+    && $fld.name != 'update_host' 
+    && $fld.name != 'check_by' 
+    && $fld.name != 'check_time' 
+    && $fld.name != 'approve_by' 
+    && $fld.name != 'approve_time' 
+    &&  $fld.name != 'external_attachment' 
+    && $fld.name != 'external_picture' }
+    {if $col_counter==1}
+        <Element Name="fld_{$fld.name}" Class="ColumnText" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y" Link="javascript:">
+         		<EventHandler Name="fld_{$fld.name}_onclick" Event="onclick" 
+                              Function="SwitchForm({$form_package}.{$check_detail_form},{literal}{@:Elem[fld_Id].Value}{/literal})"   />
+        </Element>
+    {else}
+        {if $fld.element == 'Checkbox'}
+            <Element Name="fld_{$fld.name}" Class="ColumnBool" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+        {else}
+            <Element Name="fld_{$fld.name}" Class="ColumnText" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+        {/if}
+    {/if}
+        	
+{/if}
+{assign var=col_counter value=$col_counter+1}
+{/if}
+{/foreach}
+    </DataPanel>
+    <ActionPanel>
+        <Element Name="btn_check" 
+                 Class="Button" 
+                 Text="Un-Check" 
+                 CssClass="button_gray_l" 
+                 Access="{$acl.check}">
+            <EventHandler Name="check_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="UnCheckRecord()" 
+                          ShortcutKey="Ctrl+C" 
+                          ContextMenu="Un-Check"/>
+        </Element>
+    </ActionPanel> 
+    <NavPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/nav_panel.tpl'}         
+    </NavPanel> 
+    <SearchPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/search_panel.tpl'}       
+    </SearchPanel>
+</EasyForm>

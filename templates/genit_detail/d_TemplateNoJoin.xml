@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="no"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+<BizDataObj Name="{$do_name}" 
+            Description="" 
+            Class="BizDataObj" 
+            DBName="{$db_name}" 
+            Table="{$table_name}" 
+            SearchRule="{$search_rule}" 
+            SortRule="{if $sort_rule}{$sort_rule}{/if}" 
+            OtherSQLRule="" 
+            Uniqueness="{$uniqueness}" 
+            Stateless="Y" 
+            IdGeneration="{if $id_identity}Identity{/if}" 
+            CacheLifeTime="0" 
+            CreateCondition="{$acl.create}" 
+            UpdateCondition="{$acl.update}" 
+            DeleteCondition="{$acl.delete}">
+    
+    <BizFieldList>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/do/biz_field_list_nojoin.tpl'}
+	</BizFieldList>
+    
+    <TableJoins>
+    </TableJoins>
+    
+    <ObjReferences>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/do/obj-ref.tpl'}
+    </ObjReferences>
+    
+</BizDataObj>

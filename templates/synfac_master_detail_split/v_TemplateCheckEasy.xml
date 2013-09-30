@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyView Name="{$default_view_name}" 
+          Description="{$comp|capitalize|replace:'.':' '}" 
+          Class="EasyView" 
+          Tab="" 
+          TemplateEngine="Smarty" 
+          TemplateFile="view.tpl"
+          Access="{$acl.check}">
+   <FormReferences>
+   		<Reference Name="{$form_package}.{$default_form}"/>
+{if $more_form}
+{foreach from=$more_form item=more_form_item}
+        <Reference Name="{$more_form_item}"/>
+{/foreach} 
+{/if}
+   </FormReferences>
+</EasyView>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm 
+    Name="{$form_short_name}" 
+    Class="{$class_general_form}" 
+    FormType="List" 
+    jsClass="jbForm" 
+    Title="{$module_name|replace:'_':' '|capitalize} Management"
+    Description="" 
+    BizDataObj="{$do_package}.{$do_name}" 
+    PageSize="10" 
+    DefaultForm="Y" 
+    TemplateEngine="Smarty" 
+    TemplateFile="grid.tpl" 
+    EventName="{$event_name}" 
+    MessageFile="{$message_file}" 
+    Access="{$acl.access}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/data_panel_split.tpl'}
+    </DataPanel>
+    <ActionPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_panel_crud_split.tpl'}
+        
+        <Element Name="btn_spacer0" Class="Spacer" Text="" >
+        </Element>
+
+        <Element Name="btn_detail_item" 
+                 Class="Button" 
+                 Text="Detail Item" 
+                 CssClass="button_gray_l" >
+            <EventHandler Name="btn_detail_item_onclick" 
+                          Event="onclick"
+                          EventLogMsg=""
+                          Function="EditRecord()"
+                          RedirectPage="{literal}{@home:url}{/literal}/{$module}/{$detailitemview_uri}/Id_{literal}{@:Elem[fld_Id].Value}{/literal}"
+                          ShortcutKey="Ctrl+L" 
+                          ContextMenu="Default List"/>
+        </Element>
+
+        <Element Name="btn_spacer1" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>
+       
+       {if $has_check_process==1 }
+        <Element Name="btn_check" 
+                 Class="Button" 
+                 Text="Check Y/N" 
+                 CssClass="button_gray_l"
+                 Access="{$acl.check}">
+            <EventHandler Name="btn_check_onclick" 
+                          Event="onclick"
+                          EventLogMsg=""
+                          Function="toggleCheckRecord()"
+                          ShortcutKey="Ctrl+L" 
+                          ContextMenu="Check Y/N" />
+        </Element>
+       {/if}
+       
+       {if $has_approve_process==1 }
+        <Element Name="btn_approve" 
+                 Class="Button" 
+                 Text="Approve Y/N" 
+                 CssClass="button_gray_l"
+                 Access="{$acl.approve}">
+            <EventHandler Name="btn_approve_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="toggleApproveRecord()" 
+                          ShortcutKey="Ctrl+C" 
+                          ContextMenu="Approve Y/N"/>
+        </Element>
+        {/if}
+        
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_extra.tpl'}
+        
+    </ActionPanel> 
+    <NavPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/nav_panel.tpl'} 
+    </NavPanel> 
+    <SearchPanel>        
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/search_panel.tpl'}
+    </SearchPanel>
+</EasyForm>

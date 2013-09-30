@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm 
+    Name="{$form_short_name}" 
+    Class="{$class_general_form}" 
+    FormType="List" 
+    jsClass="jbForm" 
+    Title="{$module_name|replace:'_':' '|capitalize} Management"
+    Description="" 
+    BizDataObj="{$do_package}.{$do_name}" 
+    PageSize="10" 
+    DefaultForm="Y" 
+    TemplateEngine="Smarty" 
+    TemplateFile="grid.tpl" 
+    EventName="{$event_name}" 
+    MessageFile="{$message_file}" Access="{$acl.access}">
+    <DataPanel>
+{assign var=col_counter value=0}            
+{foreach from=$fields item=fld}
+{if $fld.name == 'Id' || $fld.onList == true}
+        {php}
+            $field = $this->_tpl_vars['fld'];
+            if ( substr($field['name'], -4)=='logo' ) {
+                $is_image = true;
+            } else {
+                $is_image = false;
+            }
+            $this->assign('is_image', $is_image);
+        
+            if ( substr($field['name'], -5)=='color' || $field['element']=="ColorPicker" ) {
+                $is_color = true;
+            } else {
+                $is_color = false;
+            }
+            $this->assign('is_color', $is_color);
+        
+        {/php}    
+
+{if $fld.name == 'Id'}
+        <Element Name="row_selections" Class="RowCheckbox"  Label="" FieldName="{$fld.name}"/>
+        <Element Name="fld_{$fld.name}" Class="Hidden" FieldName="{$fld.name}" Label="{$fld.label}" Sortable="Y" AllowURLParam="N" Link="javascript:">         
+         	<EventHandler Name="fld_{$fld.name}_onclick" 
+                          Event="onclick" 
+                          Function="SwitchForm({$form_package}.{$detail_form},{literal}{@:Elem[fld_Id].Value}{/literal})"   />
+        </Element>
+{elseif $fld.element == 'Listbox'}
+        <Element Name="fld_{$fld.name}" Class="ColumnList"  SelectFrom="{$fld.lov}" FieldName="{$fld.name}" Label="{$fld.label}"  AllowURLParam="N" />
+        
+{elseif $fld.name == 'sort_order'}
+        <Element Name="fld_{$fld.name}" Class="ColumnSorting" FieldName="{$fld.name}" Label="Ordering"  Sortable="Y" AllowURLParam="N" Translatable="N" OnEventLog="N" >
+        	<EventHandler Name="fld_sortorder_up" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({literal}{@:Elem[fld_Id].Value}{/literal},fld_{$fld.name},{literal}{{/literal}@:Elem[fld_{$fld.name}].Value-5{literal}}{/literal})" />
+        	<EventHandler Name="fld_sortorder_down" Event="onclick" EventLogMsg="" Function="UpdateFieldValue({literal}{@:Elem[fld_Id].Value}{/literal},fld_{$fld.name},{literal}{{/literal}@:Elem[fld_{$fld.name}].Value+5{literal}}{/literal})" />
+        </Element>  
+{elseif $is_color}
+        <Element Name="fld_{$fld.name}" 
+                 {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if}
+                 ElementSet="{$fld.elementSet}" 
+                 Class="ColorPicker"
+                 Mode="viewOnly"           
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 AllowURLParam="{if $fld.name eq 'Id'}Y{else}N{/if}"/>              	
+{elseif $fld.name == 'is_checked' || $fld.name == 'is_approved' }
+        <Element Name="fld_{$fld.name}" Class="ColumnBool" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+        
+{elseif $is_image }   
+{elseif $fld.element == 'RichText'}     
+{elseif $fld.raw_type!='timestamp' 
+    && $fld.name != 'create_by' 
+    && $fld.name != 'create_time' 
+    && $fld.name != 'create_host' 
+    && $fld.name != 'update_by' 
+    && $fld.name != 'update_time' 
+    && $fld.name != 'update_host' 
+    && $fld.name != 'check_by' 
+    && $fld.name != 'check_time' 
+    && $fld.name != 'approve_by' 
+    && $fld.name != 'approve_time' 
+    &&  $fld.name != 'external_attachment' 
+    && $fld.name != 'external_picture' }
+    {if $col_counter<=2 }        
+        <Element Name="fld_{$fld.name}" {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" Class="LabelBool" FieldName="{$fld.name}" Label="{$fld.label}" AllowURLParam="{if $fld.name eq 'Id'}Y{else}N{/if}"/>
+        <Element Name="fld_{$fld.name}" 
+                 Class="ColumnText" 
+                 FieldName="{$fld.name}" 
+                 Label="{$fld.label}" 
+                 {if $fld.default }DefaultValue="{$fld.default}"{/if} 
+                 Sortable="Y" 
+                 Link="javascript:"
+                >
+         		<EventHandler Name="fld_{$fld.name}_onclick"
+                              Event="onclick" 
+                              Function="SwitchForm({$form_package}.{$detail_form},{literal}{@:Elem[fld_Id].Value}{/literal})"   
+                            />
+        </Element>
+    {else}
+        {if $fld.element == 'Checkbox'}
+            <Element Name="fld_{$fld.name}" Class="ColumnBool" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+        {else}
+            <Element Name="fld_{$fld.name}" Class="ColumnText" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if} Sortable="Y"/>
+        {/if}
+    {/if}
+        	
+{/if}
+{assign var=col_counter value=$col_counter+1}
+{/if}
+{/foreach}
+    </DataPanel>
+    <ActionPanel>
+        
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_panel_crud_switch.tpl'}
+        
+        <Element Name="btn_spacer1" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>
+
+        <!--Element Name="btn_label_other_list" 
+                 Class="LabelText" 
+                 Text="Other List:" >
+        </Element-->
+        
+        <Element Name="btn_read_list" 
+                 Class="Button" 
+                 Text="Default List" 
+                 CssClass="button_gray_l">
+            <EventHandler Name="btn_read_list_onclick" 
+                          Event="onclick"
+                          EventLogMsg=""
+                          Function="SwitchForm({$form_package}.{$read_list_form})"
+                          ShortcutKey="Ctrl+L" 
+                          ContextMenu="Default List"/>
+        </Element>
+        
+        <Element Name="btn_spacer2" 
+                 Class="Spacer" 
+                 Text="" >
+        </Element>
+        
+        {if $has_check_process==1 }
+        <Element Name="btn_checked_list" 
+                 Class="Button" 
+                 Text="Checked List" 
+                 CssClass="button_gray_l">
+            <EventHandler Name="btn_checked_list_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="SwitchForm({$form_package}.{$read_check_list_form})" 
+                          ShortcutKey="Ctrl+C" 
+                          ContextMenu="Checked List"/>
+        </Element>
+        {/if}
+
+        {if $has_approve_process==1}
+        <Element Name="btn_approved_list" 
+                 Class="Button" 
+                 Text="Approved List" 
+                 CssClass="button_gray_l">
+            <EventHandler Name="btn_approved_list_onclick" 
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="SwitchForm({$form_package}.{$read_approve_list_form})"
+                          ShortcutKey="Ctrl+P" 
+                          ContextMenu="Approved List"/>
+        </Element>
+        {/if}
+        
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_extra.tpl'}
+        
+    </ActionPanel> 
+    <NavPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/nav_panel.tpl'} 
+    </NavPanel> 
+    <SearchPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/search_panel.tpl'}        
+    </SearchPanel>
+</EasyForm>

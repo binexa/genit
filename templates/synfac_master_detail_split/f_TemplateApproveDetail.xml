@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm Name="{$form_short_name}" 
+          Class="{$class_approval_form}" 
+          FormType="" 
+          jsClass="jbForm" 
+          Title="Approved {$module_name|replace:'_':' '|capitalize} Detail" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          TemplateEngine="Smarty" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/detail/data_panel_detail.tpl'}
+    </DataPanel>
+    <ActionPanel>       
+        <!--
+        <Element Name="btn_unapprove" 
+                 Class="Button" 
+                 Text="Un-Approve" 
+                 CssClass="button_gray_m" 
+                 Description="Un-Approve">
+            <EventHandler Name="btn_approve_onclick"
+                          Event="onclick" 
+                          EventLogMsg="" 
+                          Function="UnApproveRecord({literal}{@:Elem[fld_Id].Value}{/literal})"  
+                          RedirectPage="form={$form_package}.{$list_form}" 
+                          ShortcutKey="Ctrl+A" 
+                          ContextMenu="Un-Approve" />
+        </Element>
+        -->
+        <Element Name="btn_cancel" Class="Button" Text="Back" CssClass="button_gray_m">
+            <EventHandler Name="btn_cancel_onclick" Event="onclick" Function="SwitchForm()"  ShortcutKey="Escape" ContextMenu="Back" />
+        </Element>         
+    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

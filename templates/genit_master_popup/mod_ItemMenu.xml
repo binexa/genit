@@ -1,0 +1,17 @@
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+
+            <MenuItem Name="{$module|capitalize}" Title="{$comp|capitalize|replace:'.':' '}" Description="{$module|capitalize|replace:'.':' '} description" URL="" Parent="" Order="10">
+                <MenuItem Name="{$module|capitalize}.List" Title="Manage {$comp|capitalize|replace:'.':' '}" Description=""  URL="/{$module_name|lower|replace:'.':'/'}/{$listview_uri}" Order="10" Access="{$acl.resource}.{$acl.access|replace:$acl.resource:''|replace:'.':''}" />
+{if $has_check_process}
+                <MenuItem Name="{$module|capitalize}.CheckList" Title="Check {$comp|capitalize|replace:'.':' '}" Description=""  URL="/{$module_name|lower|replace:'.':'/'}/{$listview_check_uri}" Order="20" Access="{$acl.resource}.{$acl.check|replace:$acl.resource:''|replace:'.':''}"/>
+{/if}
+{if $has_approve_process}
+                <MenuItem Name="{$module|capitalize}.ApproveList" Title="Approve {$comp|capitalize|replace:'.':' '}" Description=""  URL="/{$module_name|lower|replace:'.':'/'}/{$listview_approve_uri}" Order="30" Access="{$acl.resource}.{$acl.approve|replace:$acl.resource:''|replace:'.':''}"/>
+{/if}
+            </MenuItem>

@@ -1,0 +1,80 @@
+<?xml version="1.0" standalone="no"?>
+<!-- {php} 
+$file = __FILE__;
+$pos = strrpos($file, '.php');
+$file = substr($file, 0, $pos);
+$pos = strrpos($file, '%');
+$file = substr($file, $pos+1);
+echo "Template file : " . $file; 
+{/php} -->
+
+<BizDataObj Name="{$do_short_name}" 
+            Description="" 
+            Class="BizDataObj" 
+            DBName="{$db_name}" 
+            Table="{$table_name}" 
+            SearchRule="" 
+            SortRule="{if $sort_column}[{$sort_column}] ASC{/if}" 
+            OtherSQLRule="" 
+            Uniqueness="{$uniqueness}" 
+            Stateless="N" 
+            IdGeneration="{if $id_identity}Identity{/if}" 
+            CacheLifeTime="0" 
+            CreateCondition="{$acl.create}" 
+            UpdateCondition="{$acl.update}" 
+            DeleteCondition="{$acl.delete}">
+    <BizFieldList>
+{foreach from=$fields item=fld}        
+    {if $fld.name=='timestamp'}
+        <BizField Name="timestamp" Column="timestamp" />   		
+    {elseif $fld.name=='create_by'}        
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Number" ValueOnCreate="{literal}{@profile:Id}{/literal}"/>
+    {elseif $fld.name=='create_time'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Datetime" ValueOnCreate="{literal}{date('Y-m-d H:i:s')}{/literal}"/>
+    {elseif $fld.name=='create_host'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Text" {if $fld.length }Length="{$fld.length}"{/if} ValueOnCreate="{literal}{@service.serverVariablesService:REMOTE_ADDR}{/literal}" />
+    {elseif $fld.name=='update_by'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Number" ValueOnCreate="{literal}{@profile:Id}{/literal}" ValueOnUpdate="{literal}{@profile:Id}{/literal}"/>
+    {elseif $fld.name=='update_time'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Datetime" ValueOnCreate="{literal}{date('Y-m-d H:i:s')}{/literal}" ValueOnUpdate="{literal}{date('Y-m-d H:i:s')}{/literal}"/>
+    {elseif $fld.name=='update_host'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Text" {if $fld.length }Length="{$fld.length}"{/if} ValueOnCreate="{literal}{@service.serverVariablesService:REMOTE_ADDR}{/literal}" ValueOnUpdate="{literal}{@service.serverVariablesService:REMOTE_ADDR}{/literal}" />
+    {elseif $fld.name=='color'}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="Text" {if $fld.length }Length="{$fld.length}"{/if} Required="{if $fld.nullable }N{else}Y{/if}"/>
+    {elseif $fld.name=='external_attachment'}
+    {elseif $fld.name=='external_picture'}
+    {else}
+        <BizField Name="{$fld.name}" Column="{$fld.col}" Type="{$fld.type}" {if $fld.length }Length="{$fld.length}"{/if} {if $fld.name != "Id"} Required="{if $fld.nullable }N{else}Y{/if}"{/if} />
+    {/if}
+{/foreach}
+	</BizFieldList>
+    <TableJoins>
+    </TableJoins>
+    <ObjReferences>
+{foreach from=$fields item=fld}
+{if $fld.name=='external_attachment'}
+        <Object 
+            Name="attachment.do.AttachmentDO" 
+            Description="Reference to Attachment Records" 
+            Relationship="1-M" 
+            Table="attachment"                           
+            CondColumn="type" 
+            CondValue="{$table_name}" 
+            Column="foreign_id" 
+            FieldRef="Id"/>        
+{elseif $fld.name=='external_picture'}
+        <Object 
+            Name="picture.do.PictureDO" 
+            Description="Reference to Picture Records" 
+            Relationship="1-M" 
+            Table="picture" 
+            CondColumn="type" 
+            CondValue="{$table_name}" 
+            Column="foreign_id" 
+            FieldRef="Id"/>
+        
+{else}
+{/if}
+{/foreach}        
+    </ObjReferences>
+</BizDataObj>

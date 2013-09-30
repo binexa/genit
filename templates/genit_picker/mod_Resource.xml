@@ -1,0 +1,17 @@
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+        <!-- 
+        Code Generator : {$code_generator} 
+        Template file  : {$file_name} 
+        -->
+{if $acl.level != 3}
+        <Resource Name="{$acl.resource}">
+            <Action Name="{$acl.access|replace:$acl.resource:''|replace:'.':''}" 
+                    Description="Access {$module|capitalize|replace:'.':''}"/>
+        </Resource>
+{/if}
+
+

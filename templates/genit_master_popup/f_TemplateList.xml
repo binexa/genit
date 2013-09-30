@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm 
+    Name="{$form_short_name}" 
+    Class="{$class_general_form}" 
+    FormType="List" 
+    jsClass="jbForm" 
+    Title="{$module_name|replace:'_':' '|capitalize} Management"
+    Description="" 
+    BizDataObj="{$do_package}.{$do_name}" 
+    PageSize="10" 
+    DefaultForm="Y" 
+    TemplateEngine="Smarty" 
+    TemplateFile="grid.tpl" 
+    EventName="{$event_name}" 
+    MessageFile="{$message_file}" Access="{$acl.access}">
+    <DataPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/data_panel_popup.tpl'}
+    </DataPanel>
+    <ActionPanel>       
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_panel_crud_popup.tpl'}        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/action_extra.tpl'}
+    </ActionPanel> 
+    <NavPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/nav_panel.tpl'} 
+    </NavPanel> 
+    <SearchPanel>
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/list/search_panel.tpl'}
+    </SearchPanel>
+</EasyForm>

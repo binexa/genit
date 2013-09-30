@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<EasyForm Name="{$form_short_name}" 
+          Class="{if $has_check_process==1 || $has_approve_process==1}{$php_general_form}{else}EasyForm{/if}" 
+          FormType="New" 
+          jsClass="jbForm" 
+          Title="New {$module_name|replace:'_':' '|capitalize}" 
+          Description="" 
+          BizDataObj="{$do_package}.{$do_name}" 
+          TemplateEngine="Smarty" 
+          xTemplateFile="detail.tpl" 
+          TemplateFile="genit_right_detailform_elementset_tabs.tpl.html" 
+          EventName="{$event_name}" 
+          MessageFile="{$message_file}">
+    <DataPanel>  
+        {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/form/new/data_panel.tpl'}
+    </DataPanel>
+    <ActionPanel>
+        <Element Name="btn_save" Class="Button" Text="Save" CssClass="button_gray_m">
+            <EventHandler Name="save_onclick" 
+                          EventLogMsg="" 
+                          Event="onclick" 
+                          Function="InsertRecord()" 
+                          RedirectPage="{literal}{@home:url}{/literal}/{$module}/{$detailitemview_uri}/Id_{literal}{@{/literal}{$do_package}.{$do_name}{literal}:Field[Id].Value}{/literal}"
+                          ShortcutKey="Ctrl+Enter" 
+                          ContextMenu="Save" />
+        </Element>
+        <Element Name="btn_cancel" 
+                 Class="Button" 
+                 Text="Cancel" 
+                 CssClass="button_gray_m">
+            <EventHandler Name="cancel_onclick" 
+                          Event="onclick" 
+                          Function="js:history.go(-1)"
+                          ShortcutKey="Escape" 
+                          ContextMenu="Cancel"/>
+        </Element>
+    </ActionPanel> 
+    <NavPanel>
+    </NavPanel> 
+    <SearchPanel>
+    </SearchPanel>
+</EasyForm>

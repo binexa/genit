@@ -1,0 +1,19 @@
+<MenuWidget Name="LeftMenu" 
+            Title="{$module_title}" 
+            Class="menu.widget.MenuWidget" 
+            CssCLass="{$module_name|lower}" 
+            BizDataObj="menu.do.MenuTreeDO" 
+            SearchRule="[PId]='{$module_name|capitalize|replace:'.':''}'" 
+            GlobalSearchRule="[published] = 1" 
+            MenuDeep="2" 
+            TemplateEngine="Smarty" 
+            TemplateFile="vertical_menu.tpl" 
+            CacheLifeTime="0">
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+</MenuWidget>

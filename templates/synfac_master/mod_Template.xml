@@ -1,0 +1,59 @@
+<?xml version="1.0" standalone="no"?>
+{php} 
+$file = __FILE__;
+include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
+{/php} 
+
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
+<Module Name="{$module_name}"
+        Description="{$module_name} module"
+        Author="Agus Suhartono" 
+        Version="0.1.0"
+        OpenbizVersion="3.0">
+	<ACL>
+		<Resource Name="{$module_name|lower}">
+			<Action Name="Access" Description="Access {$module_name|capitalize|replace:'.':' '} Module Dashboard"/>
+		</Resource>
+{if $acl.level != 3}
+		<Resource Name="{$acl.resource}">
+{if $acl.level == 1}
+            <Action Name="{$acl.access|replace:$acl.resource:''|replace:'.':''}" Description="Access {$module|capitalize|replace:'.':' '}"/>
+            <Action Name="{$acl.manage|replace:$acl.resource:''|replace:'.':''}" Description="Manage {$module|capitalize|replace:'.':' '}"/>
+{else if $acl.level == 2}
+            <Action Name="{$acl.access|replace:$acl.resource:''|replace:'.':''}" Description="Access {$module|capitalize|replace:'.':' '}"/>
+            <Action Name="{$acl.create|replace:$acl.resource:''|replace:'.':''}" Description="Create {$module|capitalize|replace:'.':' '}"/>
+            <Action Name="{$acl.update|replace:$acl.resource:''|replace:'.':''}" Description="Update {$module|capitalize|replace:'.':' '}"/>
+            <Action Name="{$acl.delete|replace:$acl.resource:''|replace:'.':''}" Description="Delete {$module|capitalize|replace:'.':' '}"/>
+{/if}
+{if $has_check_process}
+            <Action Name="{$acl.check|replace:$acl.resource:''|replace:'.':''}" Description="Check {$module|capitalize|replace:'.':' '}"/>
+{/if}
+{if $has_approve_process}
+            <Action Name="{$acl.approve|replace:$acl.resource:''|replace:'.':''}" Description="Aprove {$module|capitalize|replace:'.':' '}"/>
+{/if}
+		</Resource>
+{/if}
+    </ACL>
+    <Menu>
+{if $dashboard_enable == 1}
+		<MenuItem Name="{$module_name|capitalize|replace:'.':''}" Title="{$module_title}" Description="{$module_name|capitalize|replace:'.':' '} Description" URL="{literal}{/literal}/{$module_name|replace:'.':'/'}/dashboard" Parent="" Order="10" >
+{/if}
+			<MenuItem Name="{$package_name|capitalize}" Title="{$comp_desc|capitalize|replace:'.':' '}" Description="{$module|capitalize|replace:'.':' '} description" URL="" Parent="" Order="10" Access="{$acl.resource}.{$acl.access|replace:$acl.resource:''|replace:'.':''}" >
+				<MenuItem Name="{$package_name|capitalize}.List" Title="Manage {$comp_desc|capitalize|replace:'.':' '}" Description=""  URL="{literal}{/literal}/{$module_name|lower|replace:'.':'/'}/{$listview_uri}" Order="10" Access="{$acl.resource}.{$acl.access|replace:$acl.resource:''|replace:'.':''}" />
+{if $has_check_process}
+                <MenuItem Name="{$package_name|capitalize}.CheckList" Title="Check {$comp_desc|capitalize|replace:'.':' '}" Description=""  URL="/{$module_name|lower|replace:'.':'/'}/{$listview_check_uri}" Order="20" Access="{$acl.resource}.{$acl.check|replace:$acl.resource:''|replace:'.':''}" />
+{/if}
+{if $has_approve_process}
+                <MenuItem Name="{$package_name|capitalize}.ApproveList" Title="Approve {$comp_desc|capitalize|replace:'.':' '}" Description=""  URL="/{$module_name|lower|replace:'.':'/'}/{$listview_approve_uri}" Order="30" Access="{$acl.resource}.{$acl.approve|replace:$acl.resource:''|replace:'.':''}" />
+{/if}
+            </MenuItem>	
+{if $dashboard_enable == 1}
+		</MenuItem>	
+{/if}
+    </Menu>
+    <Dependency>
+    	<Module Name="system"/>
+        <Module Name="menu"/>
+    </Dependency>
+</Module>
