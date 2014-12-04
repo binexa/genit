@@ -152,9 +152,7 @@
                  {if $fld.hidden }Hidden="Y"{/if}
                  Class="{$fld.element}" 
                  FieldName="{$fld.name}" 
-                 Label="{$fld.label}"
-                 {if $fld.hidden }Hidden="Y"{/if}
-                 {if $fld.lov}SelectFrom="{$fld.lov}"{/if}
+                 Label="{$fld.label}" 
                  {if $fld.default !='' }DefaultValue="{$fld.default}"{/if}  
                  AllowURLParam="N" >
     {/if}

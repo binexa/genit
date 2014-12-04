@@ -78,7 +78,7 @@ class Genit
         GenitDebug::$isDebug = false;
 
         self::loadMasterConfig();
-        //print_r(self::$masterConfig);
+        print_r(self::$masterConfig);
         //exit;
         foreach (self::$masterConfig as $masterConfigItem) {            
             echo "=========> $masterConfigItem <==========\n";

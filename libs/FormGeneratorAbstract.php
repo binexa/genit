@@ -329,15 +329,6 @@ abstract class FormGeneratorAbstract
         $smarty->assign_by_ref("list_fields", $doGen->getListFields());
         $smarty->assign_by_ref("detail_fields", $doGen->getDetailFields());       
         $smarty->assign_by_ref("edit_fields", $doGen->getEditFields());
-
-        foreach ($doGen->getEditFields() as $key => $value)
-        {
-            if ($value['name']=='arrival_datetime'||$value['name']=='ma_datetime' ) {
-                //echo __LINE__;
-                //print_r($value);
-                //exit;
-            }
-        }
         
         $fieldsJoin = $this->metaGen->config->getFieldsJoin();
         $smarty->assign_by_ref("fields_join", $fieldsJoin);
@@ -389,25 +380,8 @@ abstract class FormGeneratorAbstract
         $smarty->assign_by_ref("class_general_form", $this->class_general_form);
         $smarty->assign_by_ref("class_approval_form", $this->class_approval_form);
 
+        $smarty->assign_by_ref("id_identity", $this->metaGen->doGen->id_identity);
 
-        $hasIdIdentity = $this->metaGen->doGen->id_identity;
-        if ($hasIdIdentity) {
-            $idGeneration = 'Identity';
-        } else {
-            $idGeneration = $config->getIdGeneration();
-            if ($idGeneration!='') {
-                $hasIdIdentity = true;
-            } else {
-                $hasIdIdentity = false;
-            }
-        }
-        echo __METHOD__;
-        echo 'hasIdentity  : '.$hasIdIdentity."\n";
-        echo 'idGeneration : '.$idGeneration."\n";
-        
-        //exit;
-        $smarty->assign_by_ref("id_identity", $hasIdIdentity);
-        $smarty->assign_by_ref("id_generation", $idGeneration);
         $smarty->assign_by_ref("use_detail_view", $this->metaGen->config->useDetailView());
 
         $smarty->assign_by_ref("acl", $this->metaGen->options['acl']);

@@ -1,5 +1,4 @@
 <!-- default/form/edit/data_panel.tpl -->
-
 {foreach from=$edit_fields item=fld}
         ELEMENT : {$fld.name} . {$fld.element}
         {if ($id_identity) }
@@ -45,7 +44,7 @@
     && $fld.name != 'external_picture'  
     && $fld.name != 'external_changelog'}
     
-  
+<!-- $fld.element == 'InputDate' -->    
 {if $fld.name == 'Id'}
     {if $id_identity}
 		<Element Name="fld_{$fld.name}" 
@@ -146,11 +145,11 @@
                  FieldName="{$fld.name}" 
                  Label="{$fld.label}" 
                  {if $fld.description }Description="{$fld.description}"{/if} >
-{elseif $fld.element == 'Listbox' || $fld.element == 'LabelList'}
+{elseif $fld.element == 'Listbox'}        
         <Element Name="fld_{$fld.name}" 
                  {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} 
                  ElementSet="{$fld.elementSet}" 
-                 Class="{$fld.element}"
+                 Class="Listbox"  
                  BlankOption="...Silahkan Pilih..."
                  SelectFrom="{$fld.lov}" 
                  FieldName="{$fld.name}" 
@@ -251,7 +250,6 @@
                  Class="{$fld.element}"
                  FieldName="{$fld.name}"
                  Label="{$fld.label}"
-                 {if $fld.lov}SelectFrom="{$fld.lov}"{/if}
                  {if $fld.cssClass}CssClass="{$fld.cssClass}"{/if} 
                  {if $fld.description }Description="{$fld.description}"{/if}  >
 {/if}

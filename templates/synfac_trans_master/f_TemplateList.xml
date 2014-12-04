@@ -38,7 +38,7 @@ include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-fil
                           Event="onclick"
                           EventLogMsg=""
                           Function="EditRecord()"
-                          RedirectPage="{literal}{@home:url}{/literal}/{$module}/{$detailitemview_uri}/Id_{literal}{@:Elem[fld_Id].Value}{/literal}"
+                          RedirectPage="{literal}{@home:url}{/literal}/{$module}/{$detailitemview_uri}/{literal}{@:Elem[fld_Id].Value}{/literal}"
                           ShortcutKey="Ctrl+L" 
                           ContextMenu="Default List"/>
         </Element>

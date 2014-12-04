@@ -57,8 +57,6 @@
         <Element Name="fld_{$fld.name}" {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" Class="LabelBool" FieldName="{$fld.name}" Label="{$fld.label}" AllowURLParam="{if $fld.name eq 'Id'}Y{else}N{/if}"/>
         {elseif $fld.element == 'Listbox'}        
         <Element Name="fld_{$fld.name}" {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" Class="LabelList"  SelectFrom="{$fld.lov}" FieldName="{$fld.name}" Label="{$fld.label}"  AllowURLParam="N" />
-        {elseif $fld.element == 'common.lib.TypeSelector'}
-        <Element Name="fld_{$fld.name}" {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" Class="common.lib.TypeSelector"  SelectFrom="{$fld.lov}" FieldName="{$fld.name}" Label="{$fld.label}"  AllowURLParam="N" />
         {elseif $fld.element == 'RichText'}
 		<Element Name="fld_{$fld.name}" {if $fld.tabSet}TabSet="{$fld.tabSet}"{/if} ElementSet="{$fld.elementSet}" Class="LabelTextarea"  width="640" height="300" FieldName="{$fld.name}" Label="{$fld.label}" {if $fld.default }DefaultValue="{$fld.default}"{/if}  />
         {elseif $fld.element == 'Textarea'}

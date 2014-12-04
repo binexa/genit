@@ -255,25 +255,7 @@ class {$php_general_form} extends ChangeLogForm
         $notificationList = array($notificationData);
         $svc->saveNotificationList($notificationList);
 {literal}
-    }
+    }    
 
-{/literal}
-
-{foreach from=$external_methods  item=emItem}
-
-    public function {$emItem.methodName}($id=null) {literal} { {/literal}
-        if ($id==null || $id=='')
-            $id = BizSystem::clientProxy()->getFormInputs('_selectedId');
-
-        $service = BizSystem::getService('{$emItem.serviceName}');
-        $service->{$emItem.methodName}($id);
-    {literal}
-    }
-    
-    {/literal}
-
-{/foreach}
-
-{literal}
 }
 {/literal}

@@ -139,23 +139,7 @@ abstract class DOGeneratorAbstract
         $smarty->assign_by_ref("table_name", $config->getTableName());
         $smarty->assign_by_ref("fields", $this->getFields());
         $smarty->assign_by_ref("uniqueness", $this->getUniqueness());
-
-        $hasIdIdentity = $this->metaGen->doGen->id_identity;
-        if ($hasIdIdentity) {
-            $idGeneration = 'Identity';
-        } else {
-            $idGeneration = $config->getIdGeneration();
-            if ($idGeneration!='') {
-                $hasIdIdentity = true;
-            } else {
-                $hasIdIdentity = false;
-            }
-        }
-
-        $smarty->assign_by_ref("id_identity", $hasIdIdentity);
-        $smarty->assign_by_ref("id_generation", $idGeneration);
-
-        //$smarty->assign_by_ref("id_identity", $this->id_identity);
+        $smarty->assign_by_ref("id_identity", $this->id_identity);
 
         $smarty->assign_by_ref("sort_rule", $this->sortRule);
         $smarty->assign_by_ref("search_rule", $searchRule);
@@ -170,8 +154,6 @@ abstract class DOGeneratorAbstract
         $smarty->assign_by_ref("fields_join", $fieldsJoin);
 
         $smarty->assign_by_ref("refDO", $this->metaGen->config->getDoReferenceList());
-
-        $smarty->assign_by_ref("eventObservers", $this->metaGen->config->getDoEvents());
 
         $content = $smarty->fetch($templateFile);
         file_put_contents($targetFile, $content);
@@ -191,8 +173,8 @@ abstract class DOGeneratorAbstract
         $this->_loadDOPrimaryFields();
         $this->_loadDOJoinFields();
         $this->_loadDOExprFields();
-       // echo '<pre>';
-       // print_r($this->_fields);
+        echo '<pre>';
+        print_r($this->_fields);
     }
 
     /**
@@ -300,19 +282,15 @@ abstract class DOGeneratorAbstract
             $fieldInfo['label'] = $config->getFieldLabel($fieldName);
             $fieldInfo['sqlExpr'] = $sqlExpr;
 
-            if ($fieldName='arrival_datetime'||$fieldName=='ma_datetime') {
-                     // print_r($fieldInfo);
-                    //exit;
-            }
+            //print_r($fieldInfo);            
+            //exit;
 
             $fields[$i] = $fieldInfo;
 
 
             $i++;
         }
-        //echo '<pre>';
-        //print_r($fields);
-        //exit;
+
         $this->_fields = array_merge($this->_fields, $fields);
     }
 
@@ -425,9 +403,11 @@ abstract class DOGeneratorAbstract
         $fieldInfo['label'] = $config->getFieldLabel($fieldName);
         $fieldInfo['description'] = $config->getFieldDescription($fieldName);
 
+
         $fieldInfo['enabled'] = $config->getFieldEnabled($fieldName);
         $fieldInfo['hidden']  = $config->getFieldHidden($fieldName);
         $fieldInfo['event'] = $config->getFieldEvent($fieldName);
+
 
         $fieldInfo['elementSet'] = $config->getFieldElementSet($fieldName);
         $fieldInfo['tabSet'] = $config->getFieldTabSet($fieldName);
@@ -459,14 +439,6 @@ abstract class DOGeneratorAbstract
         {
             GenitDebug::ShowMessage($fieldInfo);
         }
-
-        /*
-        if ($fieldName=='ma_datetime') {
-            echo "<pre>".__LINE__;
-            print_r($fieldInfo);
-            exit;
-        }
-        */
         return $fieldInfo;
     }
 
@@ -746,11 +718,6 @@ abstract class DOGeneratorAbstract
             foreach ($fieldsOnEdit as $fieldName => $value)
             {
                 $fieldData = $this->getField($fieldName);
-                //if ($fieldName=='arrival_datetime'||$fieldName=='ma_datetime') {
-                    //echo '<pre>';
-                    //print_r($fieldData);
-                    //exit;
-                //}
                 if ($fieldData != null)
                 {
                     $editFields[] = $fieldData;

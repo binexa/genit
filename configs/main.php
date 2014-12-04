@@ -17,20 +17,14 @@ return array(
     //
     array( 'tableName'=>'syn_machine_group', 'type' => null ),  // synfac_master2
     array( 'tab leName'=>'syn_machine', 'type' => null ),  // synfac_master2
-     */
-//    array( 'tableName'=>'syn_machine_status', 'type' => null ),  // synfac_master2
-//    array( 'tableName'=>'syn_machine_failure_urgency', 'type' => null ),  // synfac_master2
-    //array( 'tableName'=>'syn_machine_failure_type', 'type' => null ),  // synfac_master2
-    //array( 'tableName'=>'syn_machine_failure_report', 'type' => null ),  // synfac_master2
-    array( 'tableName'=>'syn_machine_maintenance_schedule', 'type' => null ),  // synfac_master2
-    //array( 'tableName' => 'syn_machine_maintenance_type', 'type' => null ),  // synfac_master2
-    /**
+    
     // R n D
     // PE
     array('tableName' => 'syn_raw_material', 'type' => null),  // synfac_master2    
     array('tableName' => 'syn_support_material', 'type' => null), // synfac_master2
+
      * 
-     */
+     */    
     
     //array('tableName'=>'syn_material', 'type' => null ), // synfac_master2
     //array('tableName'=>'syn_material_type', 'type' => null ),  // synfac_master2
@@ -127,50 +121,22 @@ return array(
     //array( 'tableName'=>'syn_material_return', 'type' => null ),
 	//array( 'tableName'=>'syn_material_return_item', 'type' => null ), 
     
-    // array( 'tableName'=>'syn_sopd', 'type' => null ), // synfac_master2
+    array( 'tableName'=>'syn_sopd', 'type' => null ), // synfac_master2
     
-/*
+    /*
     array( 'tableName'=>'syn_package_request_fiber', 'type' => null ),
     array( 'tableName'=>'syn_package_request_latex', 'type' => null ),
     array( 'tableName'=>'syn_package_request_pe', 'type' => null ),
-    array( 'tableName'=>'syn_package_request_support', 'type' => null ),
- */
+     * 
+     */
+    //array( 'tableName'=>'syn_package_request_support', 'type' => null ),
+    
     /*
     array( 'tableName'=>'syn_sopd_package_request_fiber', 'type' => null ),
     array( 'tableName'=>'syn_sopd_package_request_latex', 'type' => null ),
     array( 'tableName'=>'syn_sopd_package_request_pe', 'type' => null ),
      * 
      */
-
     //array( 'tableName'=>'syn_sopd_package_request_support', 'type' => null ),
-    //array( 'tableName'=>'syn_material_arrival_status', 'type' => null ),
-
-    //-----------------------
-
-/*
-    array( 'tableName'=>'syn_package_trans_request_fiber', 'type' => null ),
-    array( 'tableName'=>'syn_package_trans_request_latex', 'type' => null ),
-    array( 'tableName'=>'syn_package_trans_request_pe', 'type' => null ),
-    array( 'tableName'=>'syn_package_trans_request_support', 'type' => null ),
-*/
-
-/*
-    array( 'tableName'=>'syn_package_trans_fiber', 'type' => null ),
-    array( 'tableName'=>'syn_package_trans_latex', 'type' => null ),
-    array( 'tableName'=>'syn_package_trans_pe', 'type' => null ),
- *
- */
-    //array( 'tableName'=>'syn_package_trans_support', 'type' => null ),
-
-/*
-    array( 'tableName'=>'syn_sopd_package_trans_fiber', 'type' => null ),
-    array( 'tableName'=>'syn_sopd_package_trans_latex', 'type' => null ),
-    array( 'tableName'=>'syn_sopd_package_trans_pe', 'type' => null ),
-    array( 'tableName'=>'syn_sopd_package_trans_support', 'type' => null ),
-*/
-    //array( 'tableName'=>'perpus_cabang', 'type' => null ),
-    //array( 'tableName'=>'perpus_buku', 'type' => null ),
-
-    //array( 'tableName'=>'perpus_trans_pinjam_item', 'type' => null ),
-    //array( 'tableName'=>'perpus_trans_pinjam', 'type' => null ),
+    
 );

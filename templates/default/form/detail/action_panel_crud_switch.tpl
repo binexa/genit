@@ -1,5 +1,4 @@
-      {if $has_add_form }
-        <Element Name="btn_new"
+        <Element Name="btn_new" 
                  Class="Button" 
                  Text="Add" 
                  CssClass="button_gray_add" 
@@ -9,9 +8,7 @@
                           Function="SwitchForm({$form_package}.{$new_form})"  
                           ShortcutKey="Insert" 
                           ContextMenu="New" />
-        </Element>
-      {/if}
-      {if $has_edit_form }
+        </Element>          
         <Element Name="btn_edit" 
                  Class="Button" 
                  Text="Edit" 
@@ -23,8 +20,6 @@
                           ShortcutKey="Ctrl+E" 
                           ContextMenu="Edit" />
         </Element>
-      {/if}
-      {if $has_delete_form }
         <Element Name="btn_delete" 
                  Class="Button" 
                  Text="Delete" 
@@ -38,7 +33,6 @@
                           ShortcutKey="Ctrl+Delete" 
                           ContextMenu="Delete" />
         </Element>
-      {/if}
         <Element Name="btn_cancel" 
                  Class="Button" 
                  Text="List" 

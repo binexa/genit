@@ -4,8 +4,8 @@ $file = __FILE__;
 include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-file-name.php';
 {/php} 
 
-{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}
-<!-- {$id_identity} {$id_generation} -->
+{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/header-comment.tpl'}  
+
 <BizDataObj Name="{$do_name}" 
             Description="" 
             Class="BizDataObj" 
@@ -16,8 +16,7 @@ include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-fil
             OtherSQLRule="{if $other_sql_rule}{$other_sql_rule}{/if}" 
             Uniqueness="{$uniqueness}" 
             Stateless="N" 
-            xIdGeneration="{if $id_identity}{$id_generation}{/if}"
-            IdGeneration="{$id_generation}"
+            IdGeneration="{if $id_identity}Identity{/if}" 
             CacheLifeTime="0" 
             CreateCondition="{$acl.create}" 
             UpdateCondition="{$acl.update}" 

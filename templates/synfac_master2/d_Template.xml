@@ -16,7 +16,7 @@ include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-fil
             OtherSQLRule="" 
             Uniqueness="{$uniqueness}" 
             Stateless="N" 
-            IdGeneration="{if $id_identity}{$id_generation}{/if}"
+            IdGeneration="{if $id_identity}Identity{/if}" 
             CacheLifeTime="0" 
             CreateCondition="{$acl.create}" 
             UpdateCondition="{$acl.update}" 
@@ -32,9 +32,4 @@ include 'E:/localhost/public_html/synfac/bin/genit/templates/default/php/set-fil
     <ObjReferences>
 {include file='E:/localhost/public_html/synfac/bin/genit/templates/default/do/obj-ref.tpl'}                
     </ObjReferences>
-
-    <EventObservers>
-{include file='E:/localhost/public_html/synfac/bin/genit/templates/default/do/event.tpl'}
-    </EventObservers>
-
 </BizDataObj>

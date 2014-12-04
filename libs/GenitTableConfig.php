@@ -747,16 +747,6 @@ class GenitTableConfig
         }
         return $fieldsOnDetail;
     }
-
-    public function getDoEvents()
-    {
-        $fieldsOnDetail = NULL;
-        if ( isset($this->config['doEvents'] ) ) {
-            $fieldsOnDetail = $this->config['doEvents'];
-        }
-        return $fieldsOnDetail;
-    }
-
     
 
     public function getAccessLevel()
@@ -1115,19 +1105,6 @@ class GenitTableConfig
             $hasValue = $default;
         }
         return $hasValue;
-    }
-
-    /**
-     *
-     * @return type
-     */
-    public function getIdGeneration()
-    {
-        $idGeneration = '';
-        if ( isset($this->config['idGeneration']) ) {
-            $idGeneration = $this->config['idGeneration'];
-        }
-        return $idGeneration;
     }
 
 }

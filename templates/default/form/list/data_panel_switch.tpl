@@ -34,7 +34,7 @@
                           Event="onclick" 
                           Function="SwitchForm({$form_package}.{$detail_form},{literal}{@:Elem[fld_Id].Value}{/literal})"   />
         </Element>
-{elseif $fld.element == 'Listbox' || $fld.element == 'LabelList' || $fld.element == 'common.lib.TypeSelector'}
+{elseif $fld.element == 'Listbox' || $fld.element == 'LabelList' }
         <Element Name="fld_{$fld.name}" 
                  Class="ColumnList"  
                  SelectFrom="{$fld.lov}" 

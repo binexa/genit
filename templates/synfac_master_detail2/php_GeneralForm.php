@@ -278,10 +278,7 @@ class {$php_general_form} extends ChangeLogForm
 
         $service = BizSystem::getService('{$emItem.serviceName}');
         $service->{$emItem.methodName}($id);
-    {literal}
-    }
-    
-    {/literal}
+    {literal}}{/literal}
     
 {/foreach}
 
