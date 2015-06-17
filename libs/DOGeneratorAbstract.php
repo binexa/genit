@@ -800,6 +800,7 @@ abstract class DOGeneratorAbstract
         $fullCompName = $config->getPackageName() . ".do." . $this->doName;
         return $fullCompName;
     }
+    
 
 }
 
